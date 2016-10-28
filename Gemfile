@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-github'
