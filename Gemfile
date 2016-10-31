@@ -31,8 +31,10 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'devise'
-gem 'omniauth'
-gem 'omniauth-github'
+gem 'omniauth', '~> 1.2'
+# gem 'omniauth-github'
+# gem 'omniauth-slack'
+gem 'omniauth-slack', :github => 'ginjo/omniauth-slack', :branch => 'auth-hash-fixes'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
