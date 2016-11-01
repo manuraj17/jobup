@@ -9,7 +9,9 @@
   </head>
 
   <body>
-    <img src="<%= current_user.avatar %>">
+    <% if user_signed_in? %>
+      <img src="<%= current_user.avatar %>">
+    <% end %>
     <%= yield %>
   </body>
 </html>
