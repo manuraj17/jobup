@@ -1,5 +1,4 @@
-<p id="notice"><%= notice %></p>
-<%= current_user.email %>
+
 <h1>Jobs</h1>
 
 <table>
@@ -21,7 +20,7 @@
         <td><%= job.description %></td>
         <td><%= job.location %></td>
         <td><%= job.company %></td>
-        <td><%= job.user_id %></td>
+        <td><%= job.owner %></td>
         <td><%= link_to 'Show', job %></td>
         <td><%= link_to 'Edit', edit_job_path(job) %></td>
         <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>

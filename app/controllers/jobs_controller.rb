@@ -24,7 +24,9 @@ class JobsController < ApplicationController
   # POST /jobs
   # POST /jobs.json
   def create
-    @job = Job.new(job_params)
+    @user = User.find(current_user.id)
+    # @job = Job.new(job_params)
+    @job = @user.jobs.new(job_params.merge(owner: current_user.name))
 
     respond_to do |format|
       if @job.save

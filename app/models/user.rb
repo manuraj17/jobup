@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable
 
+  has_many :jobs
   def self.from_omniauth(auth)
     # byebug
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -12,6 +13,8 @@ class User < ApplicationRecord
       user.provider = auth.provider
       user.uid      = auth['info']['user_id']
       user.email    = auth['info']['email']
+      user.name     = auth['info']['name']
+      user.avatar   = auth['info']['image']
       user.password = Devise.friendly_token[0,20]
     end
   end

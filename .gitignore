@@ -18,3 +18,6 @@
 
 # Ignoring the .env file
 .env
+
+# Ignore Backup folders if any
+/Backup/*
