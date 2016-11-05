@@ -8,7 +8,6 @@
       <th>Description</th>
       <th>Location</th>
       <th>Company</th>
-      <th>Posted By</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,7 +19,6 @@
         <td><%= job.description %></td>
         <td><%= job.location %></td>
         <td><%= job.company %></td>
-        <td><%= job.owner %></td>
         <td><%= link_to 'Show', job %></td>
         <td><%= link_to 'Edit', edit_job_path(job) %></td>
         <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>

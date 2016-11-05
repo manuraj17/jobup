@@ -11,6 +11,16 @@ class JobsController < ApplicationController
   # GET /jobs/1
   # GET /jobs/1.json
   def show
+    @user = @job.user
+    respond_to do |format|
+      format.html
+      format.json { render :json => {
+        :job =>  @job.as_json(:only => [ :id, :title, :description, :location, :company, :created_at],
+                              :include => [:user => {
+                                :only => [:name, :email]}]),
+        }}
+        # :user => @job.user.as_json(:only => [:id, :email, :name])
+    end
   end
 
   # GET /jobs/new
@@ -27,8 +37,8 @@ class JobsController < ApplicationController
   def create
     @user = User.find(current_user.id)
     # @job = Job.new(job_params)
-    @job = @user.jobs.new(job_params.merge(owner: current_user.name))
-
+    # @job = @user.jobs.new(job_params.merge(owner: current_user.name))
+    @job = @user.jobs.new(job_params)
     respond_to do |format|
       if @job.save
         format.html { redirect_to @job, notice: 'Job was successfully created.' }
@@ -77,6 +87,6 @@ class JobsController < ApplicationController
 
     # Preventing users from editing jobs posted by others
     def correct_user
-      redirect_to jobs_url unless @job.user == current_user
+      redirect_to jobs_url unless @job.user_id == current_user.id
     end
 end
