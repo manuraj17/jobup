@@ -77,7 +77,6 @@ class JobsController < ApplicationController
 
     # Preventing users from editing jobs posted by others
     def correct_user
-      puts "This method called"
       redirect_to jobs_url unless @job.user == current_user
     end
 end
