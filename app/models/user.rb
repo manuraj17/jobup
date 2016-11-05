@@ -19,3 +19,17 @@ class User < ApplicationRecord
     end
   end
 end
+
+=begin
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create.update do |user|
+      user.provider = auth.provider
+      user.uid      = auth['info']['user_id']
+      user.password = Devise.friendly_token[0,20]
+    end.update(
+      email: auth['info']['email'],
+      name: auth['info']['name'],
+      avatar: auth['info']['image']
+    )
+  end
+= end

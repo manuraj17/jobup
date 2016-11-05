@@ -1,5 +1,6 @@
 class JobsController < ApplicationController
   before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   # GET /jobs
   # GET /jobs.json
@@ -72,5 +73,11 @@ class JobsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
       params.require(:job).permit(:title, :description, :location, :company)
+    end
+
+    # Preventing users from editing jobs posted by others
+    def correct_user
+      puts "This method called"
+      redirect_to jobs_url unless @job.user == current_user
     end
 end
