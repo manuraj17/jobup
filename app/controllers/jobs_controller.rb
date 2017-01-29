@@ -1,5 +1,6 @@
 class JobsController < ApplicationController
   before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   # GET /jobs
   # GET /jobs.json
@@ -10,6 +11,16 @@ class JobsController < ApplicationController
   # GET /jobs/1
   # GET /jobs/1.json
   def show
+    @user = @job.user
+    respond_to do |format|
+      format.html
+      format.json { render :json => {
+        :job =>  @job.as_json(:only => [ :id, :title, :description, :location, :company, :created_at],
+                              :include => [:user => {
+                                :only => [:name, :email]}]),
+        }}
+        # :user => @job.user.as_json(:only => [:id, :email, :name])
+    end
   end
 
   # GET /jobs/new
@@ -24,8 +35,10 @@ class JobsController < ApplicationController
   # POST /jobs
   # POST /jobs.json
   def create
-    @job = Job.new(job_params)
-
+    @user = User.find(current_user.id)
+    # @job = Job.new(job_params)
+    # @job = @user.jobs.new(job_params.merge(owner: current_user.name))
+    @job = @user.jobs.new(job_params)
     respond_to do |format|
       if @job.save
         format.html { redirect_to @job, notice: 'Job was successfully created.' }
@@ -70,5 +83,10 @@ class JobsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
       params.require(:job).permit(:title, :description, :location, :company)
+    end
+
+    # Preventing users from editing jobs posted by others
+    def correct_user
+      redirect_to jobs_url unless @job.user_id == current_user.id
     end
 end
